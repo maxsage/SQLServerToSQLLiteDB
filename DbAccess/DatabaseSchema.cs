@@ -12,4 +12,6 @@ namespace DbAccess
         public List<TableSchema> Tables = new List<TableSchema>();
         public List<ViewSchema> Views = new List<ViewSchema>();
     }
+
+    // Just added this comment for fun
 }
