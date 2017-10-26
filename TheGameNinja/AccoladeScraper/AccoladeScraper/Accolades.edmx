@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AccoladesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Accolades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VideoGameId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DateEarned" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Platforms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VideoGames">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="GenreId" Type="int" />
+          <Property Name="PlatformId" Type="int" />
+          <Property Name="MediaTypeId" Type="int" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="200" />
+          <Property Name="DatePurchased" Type="date" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="CurrentlyPlaying" Type="bit" />
+          <Property Name="Completed" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Accolade_VideoGames">
+          <End Role="VideoGames" Type="Self.VideoGames" Multiplicity="1" />
+          <End Role="Accolades" Type="Self.Accolades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoGames">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accolades">
+              <PropertyRef Name="VideoGameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoGame_MediaType">
+          <End Role="MediaTypes" Type="Self.MediaTypes" Multiplicity="0..1" />
+          <End Role="VideoGames" Type="Self.VideoGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideoGames">
+              <PropertyRef Name="MediaTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoGame_Platform">
+          <End Role="Platforms" Type="Self.Platforms" Multiplicity="0..1" />
+          <End Role="VideoGames" Type="Self.VideoGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platforms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideoGames">
+              <PropertyRef Name="PlatformId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoGames_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="VideoGames" Type="Self.VideoGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideoGames">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AccoladesModelStoreContainer">
+          <EntitySet Name="Accolades" EntityType="Self.Accolades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaTypes" EntityType="Self.MediaTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Platforms" EntityType="Self.Platforms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoGames" EntityType="Self.VideoGames" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Accolade_VideoGames" Association="Self.FK_Accolade_VideoGames">
+            <End Role="VideoGames" EntitySet="VideoGames" />
+            <End Role="Accolades" EntitySet="Accolades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoGame_MediaType" Association="Self.FK_VideoGame_MediaType">
+            <End Role="MediaTypes" EntitySet="MediaTypes" />
+            <End Role="VideoGames" EntitySet="VideoGames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoGame_Platform" Association="Self.FK_VideoGame_Platform">
+            <End Role="Platforms" EntitySet="Platforms" />
+            <End Role="VideoGames" EntitySet="VideoGames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoGames_Genres" Association="Self.FK_VideoGames_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="VideoGames" EntitySet="VideoGames" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AccoladesModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AccoladesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accolades" EntityType="AccoladesModel.Accolade" />
+          <EntitySet Name="Genres" EntityType="AccoladesModel.Genre" />
+          <EntitySet Name="MediaTypes" EntityType="AccoladesModel.MediaType" />
+          <EntitySet Name="Platforms" EntityType="AccoladesModel.Platform" />
+          <EntitySet Name="VideoGames" EntityType="AccoladesModel.VideoGame" />
+          <AssociationSet Name="FK_Accolade_VideoGames" Association="AccoladesModel.FK_Accolade_VideoGames">
+            <End Role="VideoGame" EntitySet="VideoGames" />
+            <End Role="Accolade" EntitySet="Accolades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoGames_Genres" Association="AccoladesModel.FK_VideoGames_Genres">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="VideoGame" EntitySet="VideoGames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoGame_MediaType" Association="AccoladesModel.FK_VideoGame_MediaType">
+            <End Role="MediaType" EntitySet="MediaTypes" />
+            <End Role="VideoGame" EntitySet="VideoGames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoGame_Platform" Association="AccoladesModel.FK_VideoGame_Platform">
+            <End Role="Platform" EntitySet="Platforms" />
+            <End Role="VideoGame" EntitySet="VideoGames" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Accolade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VideoGameId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DateEarned" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VideoGame" Relationship="AccoladesModel.FK_Accolade_VideoGames" FromRole="Accolade" ToRole="VideoGame" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VideoGames" Relationship="AccoladesModel.FK_VideoGames_Genres" FromRole="Genre" ToRole="VideoGame" />
+        </EntityType>
+        <EntityType Name="MediaType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VideoGames" Relationship="AccoladesModel.FK_VideoGame_MediaType" FromRole="MediaType" ToRole="VideoGame" />
+        </EntityType>
+        <EntityType Name="Platform">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VideoGames" Relationship="AccoladesModel.FK_VideoGame_Platform" FromRole="Platform" ToRole="VideoGame" />
+        </EntityType>
+        <EntityType Name="VideoGame">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="GenreId" Type="Int32" />
+          <Property Name="PlatformId" Type="Int32" />
+          <Property Name="MediaTypeId" Type="Int32" />
+          <Property Name="ImageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DatePurchased" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="CurrentlyPlaying" Type="Boolean" />
+          <Property Name="Completed" Type="Boolean" />
+          <NavigationProperty Name="Accolades" Relationship="AccoladesModel.FK_Accolade_VideoGames" FromRole="VideoGame" ToRole="Accolade" />
+          <NavigationProperty Name="Genre" Relationship="AccoladesModel.FK_VideoGames_Genres" FromRole="VideoGame" ToRole="Genre" />
+          <NavigationProperty Name="MediaType" Relationship="AccoladesModel.FK_VideoGame_MediaType" FromRole="VideoGame" ToRole="MediaType" />
+          <NavigationProperty Name="Platform" Relationship="AccoladesModel.FK_VideoGame_Platform" FromRole="VideoGame" ToRole="Platform" />
+        </EntityType>
+        <Association Name="FK_Accolade_VideoGames">
+          <End Type="AccoladesModel.VideoGame" Role="VideoGame" Multiplicity="1" />
+          <End Type="AccoladesModel.Accolade" Role="Accolade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoGame">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accolade">
+              <PropertyRef Name="VideoGameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoGames_Genres">
+          <End Type="AccoladesModel.Genre" Role="Genre" Multiplicity="0..1" />
+          <End Type="AccoladesModel.VideoGame" Role="VideoGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideoGame">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoGame_MediaType">
+          <End Type="AccoladesModel.MediaType" Role="MediaType" Multiplicity="0..1" />
+          <End Type="AccoladesModel.VideoGame" Role="VideoGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideoGame">
+              <PropertyRef Name="MediaTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoGame_Platform">
+          <End Type="AccoladesModel.Platform" Role="Platform" Multiplicity="0..1" />
+          <End Type="AccoladesModel.VideoGame" Role="VideoGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platform">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideoGame">
+              <PropertyRef Name="PlatformId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AccoladesModelStoreContainer" CdmEntityContainer="AccoladesEntities">
+          <EntitySetMapping Name="Accolades">
+            <EntityTypeMapping TypeName="AccoladesModel.Accolade">
+              <MappingFragment StoreEntitySet="Accolades">
+                <ScalarProperty Name="DateEarned" ColumnName="DateEarned" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VideoGameId" ColumnName="VideoGameId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="AccoladesModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MediaTypes">
+            <EntityTypeMapping TypeName="AccoladesModel.MediaType">
+              <MappingFragment StoreEntitySet="MediaTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Platforms">
+            <EntityTypeMapping TypeName="AccoladesModel.Platform">
+              <MappingFragment StoreEntitySet="Platforms">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideoGames">
+            <EntityTypeMapping TypeName="AccoladesModel.VideoGame">
+              <MappingFragment StoreEntitySet="VideoGames">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="CurrentlyPlaying" ColumnName="CurrentlyPlaying" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="DatePurchased" ColumnName="DatePurchased" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="MediaTypeId" ColumnName="MediaTypeId" />
+                <ScalarProperty Name="PlatformId" ColumnName="PlatformId" />
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Accolades">
+        <EntityTypeShape EntityType="AccoladesModel.Accolade" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="AccoladesModel.Genre" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="AccoladesModel.MediaType" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="AccoladesModel.Platform" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AccoladesModel.VideoGame" Width="1.5" PointX="3" PointY="2.375" />
+        <AssociationConnector Association="AccoladesModel.FK_Accolade_VideoGames" />
+        <AssociationConnector Association="AccoladesModel.FK_VideoGames_Genres" />
+        <AssociationConnector Association="AccoladesModel.FK_VideoGame_MediaType" />
+        <AssociationConnector Association="AccoladesModel.FK_VideoGame_Platform" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

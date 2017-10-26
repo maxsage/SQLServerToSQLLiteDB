@@ -1,0 +1,28 @@
+﻿<Window x:Class="AccoladeScraper.Help"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Help" Height="650" Width="500">
+    <Grid>
+        <ScrollViewer>
+            <TextBlock x:Name="txtHelp" TextWrapping="WrapWithOverflow">
+                <Run Text="1. First of all download the cover art for the game from Amazon or somewhere on the Web."></Run><LineBreak /><LineBreak />
+                <Run Text="2. Load the image in Photoshop and resize to have a width of 80 pixels."></Run><LineBreak /><LineBreak />
+                <Run Text="3. Use FileZilla to upload the image to www.Accolades.me."></Run><LineBreak /><LineBreak />
+                <Run Text="4. Go to the Accolades web site and create a new game."></Run><LineBreak /><LineBreak />
+                <Run Text="5. Add the game to My Games."></Run><LineBreak /><LineBreak />
+                <Run Text="6. Now use Accolades Scraper to select the game you just created."></Run><LineBreak /><LineBreak />
+                <Run Text="7. Find the relevant game on www.accolades.org and browse to the accolades list."></Run><LineBreak /><LineBreak />
+                <Run Text="8. Copy the url for the accolades list from www.accolades.org to the accolade scraper's Url field."></Run><LineBreak /><LineBreak />
+                <Run Text="9. Click the Scrape button to scrape the details of the accolades from www.accolades.org into the accolade scraper."></Run><LineBreak /><LineBreak />
+                <Run Text="10. Once the scrape has finished you can click the Import button to import the details into the SQL Server hosted on Accolades.me."></Run><LineBreak /><LineBreak />
+                <Run Text="11. Once the import has finished you can click the get images button to download the accolade images from www.accolades.org into a folder on the local machine."></Run><LineBreak /><LineBreak />
+                <Run Text="12. Once the images have been downloaded you can process them in Photoshop using the Crop and Greyscale Accolade Actions."></Run><LineBreak /><LineBreak />
+                <Run Text="13. Firstly crop the images by going to File>Automate>Batch. From the resulting dialog box select the Accolades Set and the Crop Accolade Action, set the relevant folder locations and file naming section then click Ok."></Run><LineBreak /><LineBreak />
+                <Run Text="14. Once the Batch Automation has completed successfully you can copy the cropped images back into the original folder ready to be greyscaled."></Run><LineBreak /><LineBreak />
+                <Run Text="15. Secondly greyscale the images by going to File>Automate>Batch. From the resulting dialog box select the Trophies Set and the GreyscaleAccolade Action, set the relevant folder locations and file naming section (remember to add a G_ to signify a greyscale image) then click Ok."></Run><LineBreak /><LineBreak />
+                <Run Text="16. Now use FileZilla to upload the accolade images to www.Accolades.me."></Run><LineBreak /><LineBreak />
+                <Run Text="17. Check all the images and game details are correct by accessing www.Accolades.me."></Run><LineBreak /><LineBreak />
+            </TextBlock>
+        </ScrollViewer>
+    </Grid>
+</Window>

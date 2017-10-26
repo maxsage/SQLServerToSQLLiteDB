@@ -1,0 +1,57 @@
+﻿<div class="panel panel-default row" ng-controller="videogameListCtrl">
+    <button ng-click="createVideogame()" class="btn btn-success">Create</button>
+    <div class="alert alert-danger" ng-show="data.error">
+        Error ({{data.error.status}}). The  videogame data was not loaded.
+        <a href="/app.html" class="alert-link">Click here to try again</a>
+    </div>
+    <div class="panel panel-default row" ng-controller="videogameListCtrl"
+         ng-hide="data.error">
+        <div class="col-xs-3">
+            <a ng-click="selectPlatform()"
+               class="btn btn-block btn-default btn-lg">Home</a>
+            <a ng-repeat="item in data.platforms | orderBy: 'Name' "
+               ng-click="selectPlatform(item.Id)"
+               class="btn btn-block btn-default btn-lg"
+               ng-class="getPlatformClass(item.Id)">
+                {{item.Name}}
+            </a>
+        </div>
+        <div class="col-xs-8">
+            <div class="well"
+                 ng-repeat="item in data.videogames | filter:platformFilterFn | range:selectedPage:pageSize | orderBy:'-DatePurchased'">
+                <p>
+                    <strong>{{item.Name}}</strong> - {{item.Description | cut:true:100:'...'}}
+                    <span class="pull-right label label-primary">
+                        {{item.Rating}}
+                    </span>
+                </p>
+                <button ng-click="editVideogame(item, $index)"
+                        class="btn btn-success pull-right">
+                    Edit
+                </button>
+
+            </div>
+            <div class="pull-right btn-group">
+                <a ng-repeat="page in data.videogames | filter:platformFilterFn | pageCount:pageSize"
+                   ng-click="selectPage($index + 1)" class="btn btn-default"
+                   ng-class="getPageClass($index + 1)">
+                    {{$index + 1}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--<input type="button" class="btn btn-primary" value="Add New Videogame"
+           ng-click="showCreateVideogameForm()" />
+    <br />
+    <br />
+
+    <input type="button" class="btn btn-primary" value="Update Videogame Id: 5"
+           ng-click="showUpdateVideogameForm(5)" />
+    <br />
+    <br />
+
+    <input type="text" ng-model="VideogameId" class="form-control" />
+    <input type="button" class="btn" value="Delete Videogame"
+           ng-click="deleteVideogame()" />-->
+
+</div>
